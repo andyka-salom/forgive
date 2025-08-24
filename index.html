@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Question for You</title>
     
-    <!-- Menambahkan font romantis dari Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -31,13 +30,15 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.5s ease;
+            width: 90%; /* Responsif untuk mobile */
+            max-width: 450px;
         }
 
         /* Gaya untuk judul pertanyaan dan pesan */
         h2 {
-            font-family: 'Pacifico', cursive; /* Menggunakan font romantis */
+            font-family: 'Pacifico', cursive;
             font-size: 2.5em;
-            color: #d6336c; /* Warna pink tua */
+            color: #d6336c;
             margin-bottom: 20px;
         }
 
@@ -59,18 +60,18 @@
         button, .action-btn {
             padding: 12px 25px;
             border: none;
-            border-radius: 50px; /* Membuat tombol menjadi oval */
+            border-radius: 50px;
             font-size: 1.1em;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             color: white;
-            text-decoration: none; /* Menghapus garis bawah untuk link */
+            text-decoration: none;
         }
 
         /* Tombol "Yes" */
         #yesBtn {
-            background-color: #4caf50; /* Hijau */
+            background-color: #4caf50;
         }
 
         #yesBtn:hover {
@@ -80,7 +81,7 @@
 
         /* Tombol "No" */
         #noBtn {
-            background-color: #f44336; /* Merah */
+            background-color: #f44336;
             position: absolute; /* Kunci agar bisa dipindahkan dengan JavaScript */
         }
         
@@ -96,10 +97,10 @@
             margin: 20px auto;
         }
         
-        /* Tombol "Can we talk?" BARU */
+        /* Tombol "Can we talk?" */
         #talkBtn {
-            background-color: #007bff; /* Warna biru yang bagus */
-            display: inline-block; /* Agar padding dan margin bekerja dengan benar */
+            background-color: #007bff;
+            display: inline-block;
             margin-top: 20px;
         }
         
@@ -107,7 +108,6 @@
             background-color: #0056b3;
             transform: scale(1.05);
         }
-
     </style>
 </head>
 <body>
@@ -115,8 +115,8 @@
     <div class="container" id="mainContainer">
         <!-- Tampilan Pertanyaan Awal -->
         <div id="question">
-            <!-- Menambahkan emoji memelas 🥺 -->
             <h2>Will you forgive me? 🥺</h2>
+            <img src="https://media1.tenor.com/m/pD0SA13z-iAAAAAC/please.gif" alt="Please Forgive Me GIF" class="gif" id="mainGif">
             <div class="buttons">
                 <button id="yesBtn">Yes!</button>
                 <button id="noBtn">No</button>
@@ -126,9 +126,9 @@
         <!-- Tampilan Pesan Setelah Klik "Yes" -->
         <div id="message">
             <h2>Of Course! Yay!</h2>
+            <img src="https://media1.tenor.com/m/w31c7R_1_isAAAAAC/milk-and-mocha-hug.gif" alt="Happy GIF" class="gif">
             <p>My world is a better place because you're in it. <br> Thank you for forgiving me. I love you! ❤️</p>
             
-            <!-- TOMBOL BARU UNTUK MENGARAHKAN KE WHATSAPP -->
             <a href="https://wa.me/6285183345674?text=I%20forgive%20you.%20Let's%20talk%20:)" 
                target="_blank" 
                id="talkBtn" 
@@ -139,45 +139,44 @@
     </div>
 
     <script>
-        // Mendapatkan elemen dari HTML
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
         const questionDiv = document.getElementById('question');
         const messageDiv = document.getElementById('message');
 
-        // Fungsi untuk memindahkan tombol "No" secara acak
         function moveButton() {
-            // Mendapatkan ukuran jendela browser
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
-
-            // Mendapatkan ukuran tombol
             const btnWidth = noBtn.offsetWidth;
             const btnHeight = noBtn.offsetHeight;
 
-            // Menghitung posisi acak baru
-            // Dikurangi ukuran tombol agar tidak keluar dari layar
             const newX = Math.random() * (viewportWidth - btnWidth);
             const newY = Math.random() * (viewportHeight - btnHeight);
             
-            // Menerapkan posisi baru ke tombol "No"
             noBtn.style.left = `${newX}px`;
             noBtn.style.top = `${newY}px`;
         }
+        
+        // --- PERBAIKAN DI SINI ---
 
-        // Tambahkan event listener saat kursor mouse mendekati tombol "No"
+        // Event untuk pengguna DESKTOP (saat kursor mendekati tombol)
         noBtn.addEventListener('mouseover', moveButton);
-        // Bisa juga ditambahkan untuk sentuhan di perangkat mobile (opsional)
-        noBtn.addEventListener('click', moveButton);
 
-        // Tambahkan event listener saat tombol "Yes" diklik
+        // Event untuk pengguna MOBILE (saat jari menyentuh tombol)
+        // 'touchstart' akan langsung memicu fungsi sebelum 'click' terdaftar
+        noBtn.addEventListener('touchstart', (event) => {
+            // event.preventDefault() mencegah perilaku default seperti scrolling atau zooming
+            // yang mungkin terjadi saat menyentuh, dan memastikan fungsi berjalan lancar.
+            event.preventDefault(); 
+            moveButton();
+        });
+        
+        // ------------------------
+
         yesBtn.addEventListener('click', () => {
-            // Sembunyikan tampilan pertanyaan
             questionDiv.style.display = 'none';
-            // Tampilkan pesan romantis
             messageDiv.style.display = 'block';
         });
-
     </script>
 
 </body>
