@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Question for You</title>
+    
+    <!-- Menambahkan font romantis dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+    <style>
+        /* Gaya dasar untuk halaman */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Mencegah scrollbar muncul saat tombol keluar layar */
+        }
+
+        /* Kontainer utama */
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+        }
+
+        /* Gaya untuk judul pertanyaan dan pesan */
+        h2 {
+            font-family: 'Pacifico', cursive; /* Menggunakan font romantis */
+            font-size: 2.5em;
+            color: #d6336c; /* Warna pink tua */
+            margin-bottom: 20px;
+        }
+
+        /* Gaya untuk gambar/GIF */
+        .gif {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 30px;
+        }
+
+        /* Kontainer untuk tombol */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Gaya umum untuk tombol */
+        button, .action-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px; /* Membuat tombol menjadi oval */
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            text-decoration: none; /* Menghapus garis bawah untuk link */
+        }
+
+        /* Tombol "Yes" */
+        #yesBtn {
+            background-color: #4caf50; /* Hijau */
+        }
+
+        #yesBtn:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        /* Tombol "No" */
+        #noBtn {
+            background-color: #f44336; /* Merah */
+            position: absolute; /* Kunci agar bisa dipindahkan dengan JavaScript */
+        }
+        
+        /* Kontainer pesan setelah klik "Yes" */
+        #message {
+            display: none; /* Awalnya disembunyikan */
+        }
+
+        #message p {
+            font-size: 1.2em;
+            color: #555;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        
+        /* Tombol "Can we talk?" BARU */
+        #talkBtn {
+            background-color: #007bff; /* Warna biru yang bagus */
+            display: inline-block; /* Agar padding dan margin bekerja dengan benar */
+            margin-top: 20px;
+        }
+        
+        #talkBtn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        <!-- Tampilan Pertanyaan Awal -->
+        <div id="question">
+            <!-- Menambahkan emoji memelas 🥺 -->
+            <h2>Will you forgive me? 🥺</h2>
+            <div class="buttons">
+                <button id="yesBtn">Yes!</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+
+        <!-- Tampilan Pesan Setelah Klik "Yes" -->
+        <div id="message">
+            <h2>Of Course! Yay!</h2>
+            <p>My world is a better place because you're in it. <br> Thank you for forgiving me. I love you! ❤️</p>
+            
+            <!-- TOMBOL BARU UNTUK MENGARAHKAN KE WHATSAPP -->
+            <a href="https://wa.me/6285183345674?text=I%20forgive%20you.%20Let's%20talk%20:)" 
+               target="_blank" 
+               id="talkBtn" 
+               class="action-btn">
+               Can we talk?
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Mendapatkan elemen dari HTML
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const questionDiv = document.getElementById('question');
+        const messageDiv = document.getElementById('message');
+
+        // Fungsi untuk memindahkan tombol "No" secara acak
+        function moveButton() {
+            // Mendapatkan ukuran jendela browser
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            // Mendapatkan ukuran tombol
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            // Menghitung posisi acak baru
+            // Dikurangi ukuran tombol agar tidak keluar dari layar
+            const newX = Math.random() * (viewportWidth - btnWidth);
+            const newY = Math.random() * (viewportHeight - btnHeight);
+            
+            // Menerapkan posisi baru ke tombol "No"
+            noBtn.style.left = `${newX}px`;
+            noBtn.style.top = `${newY}px`;
+        }
+
+        // Tambahkan event listener saat kursor mouse mendekati tombol "No"
+        noBtn.addEventListener('mouseover', moveButton);
+        // Bisa juga ditambahkan untuk sentuhan di perangkat mobile (opsional)
+        noBtn.addEventListener('click', moveButton);
+
+        // Tambahkan event listener saat tombol "Yes" diklik
+        yesBtn.addEventListener('click', () => {
+            // Sembunyikan tampilan pertanyaan
+            questionDiv.style.display = 'none';
+            // Tampilkan pesan romantis
+            messageDiv.style.display = 'block';
+        });
+
+    </script>
+
+</body>
+</html>
